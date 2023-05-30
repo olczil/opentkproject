@@ -19,9 +19,13 @@ namespace Project
 
         private Cube[] cubes = new Cube[] {
             // (center_x, center_y, center_z, width(x), height(y), depth(z), testure_path, texture_unit)
+            // sides (walls)
             new Cube( 0,     0,     0,      5,     2f,    5,     "/Users/olakrason/projects/HouseProject/Project/bricks.png"),
+            // door
             new Cube( 0,    -0.4f,  2.52f,  0.8f,  1.2f,  0.02f, "/Users/olakrason/projects/HouseProject/Project/white-plaster-texture.jpg"),
+            // front left side window
             new Cube(-1.4f,  0f,    2.52f,  0.8f,  0.8f,  0.02f, "/Users/olakrason/projects/HouseProject/Project/white-plaster-texture.jpg"),
+            // front right side window
             new Cube( 1.4f,  0f,    2.52f,  0.8f,  0.8f,  0.02f, "/Users/olakrason/projects/HouseProject/Project/white-plaster-texture.jpg")
         };
         private Camera camera;
