@@ -22,48 +22,47 @@ namespace Project
             float far_z = center_z - (depth / 2);
 
             vertices = new float[] {
-                // Position                  Normal
-                left_x,  bottom_y, far_z,    0.0f,  0.0f, -1.0f, // Front face
-                right_x, bottom_y, far_z,    0.0f,  0.0f, -1.0f,
-                right_x, top_y,    far_z,    0.0f,  0.0f, -1.0f,
-                right_x, top_y,    far_z,    0.0f,  0.0f, -1.0f,
-                left_x,  top_y,    far_z,    0.0f,  0.0f, -1.0f,
-                left_x,  bottom_y, far_z,    0.0f,  0.0f, -1.0f,
+                left_x, bottom_y,  far_z,  0.0f, 0.0f,
+                right_x, bottom_y, far_z,  1.0f, 0.0f,
+                right_x,  top_y,   far_z,  1.0f, 1.0f,
+                right_x,  top_y,   far_z,  1.0f, 1.0f,
+                left_x,  top_y,    far_z,  0.0f, 1.0f,
+                left_x, bottom_y,  far_z,  0.0f, 0.0f,
 
-                left_x,  bottom_y, close_z,  0.0f,  0.0f,  1.0f, // Back face
-                right_x, bottom_y, close_z,  0.0f,  0.0f,  1.0f,
-                right_x, top_y,    close_z,  0.0f,  0.0f,  1.0f,
-                right_x, top_y,    close_z,  0.0f,  0.0f,  1.0f,
-                left_x,  top_y,    close_z,  0.0f,  0.0f,  1.0f,
-                left_x,  bottom_y, close_z,  0.0f,  0.0f,  1.0f,
+                left_x, bottom_y,   close_z,  0.0f, 0.0f,
+                right_x, bottom_y,  close_z,  1.0f, 0.0f,
+                right_x, top_y,     close_z,  1.0f, 1.0f,
+                right_x, top_y,     close_z,  1.0f, 1.0f,
+                left_x,  top_y,     close_z,  0.0f, 1.0f,
+                left_x, bottom_y,   close_z,  0.0f, 0.0f,
 
-                left_x,  top_y,    close_z, -1.0f,  0.0f,  0.0f, // Left face
-                left_x,  top_y,    far_z,   -1.0f,  0.0f,  0.0f,
-                left_x,  bottom_y, far_z,   -1.0f,  0.0f,  0.0f,
-                left_x,  bottom_y, far_z,   -1.0f,  0.0f,  0.0f,
-                left_x,  bottom_y, close_z, -1.0f,  0.0f,  0.0f,
-                left_x,  top_y,    close_z, -1.0f,  0.0f,  0.0f,
+                left_x,  top_y,     close_z,  1.0f, 0.0f,
+                left_x,  top_y,    far_z,  1.0f, 1.0f,
+                left_x, bottom_y,  far_z,  0.0f, 1.0f,
+                left_x, bottom_y,  far_z,  0.0f, 1.0f,
+                left_x, bottom_y,   close_z,  0.0f, 0.0f,
+                left_x,  top_y,     close_z,  1.0f, 0.0f,
 
-                right_x, top_y,    close_z,  1.0f,  0.0f,  0.0f, // Right face
-                right_x, top_y,    far_z,    1.0f,  0.0f,  0.0f,
-                right_x, bottom_y, far_z,    1.0f,  0.0f,  0.0f,
-                right_x, bottom_y, far_z,    1.0f,  0.0f,  0.0f,
-                right_x, bottom_y, close_z,  1.0f,  0.0f,  0.0f,
-                right_x, bottom_y, close_z,  1.0f,  0.0f,  0.0f,
+                 right_x, top_y,     close_z,  1.0f, 0.0f,
+                 right_x, top_y,     far_z,  1.0f, 1.0f,
+                 right_x, bottom_y,  far_z,  0.0f, 1.0f,
+                 right_x, bottom_y,  far_z,  0.0f, 1.0f,
+                 right_x, bottom_y,  close_z,  0.0f, 0.0f,
+                 right_x, top_y,     close_z,  1.0f, 0.0f,
 
-                left_x,  bottom_y, far_z,    0.0f, -1.0f,  0.0f, // Bottom face
-                right_x, bottom_y, far_z,    0.0f, -1.0f,  0.0f,
-                right_x, bottom_y, close_z,  0.0f, -1.0f,  0.0f,
-                right_x, bottom_y, close_z,  0.0f, -1.0f,  0.0f,
-                left_x,  bottom_y, close_z,  0.0f, -1.0f,  0.0f,
-                left_x,  bottom_y, far_z,    0.0f, -1.0f,  0.0f,
+                left_x,  bottom_y, far_z,  0.0f, 1.0f,
+                right_x, bottom_y, far_z,  1.0f, 1.0f,
+                right_x, bottom_y, close_z,  1.0f, 0.0f,
+                right_x, bottom_y, close_z,  1.0f, 0.0f,
+                left_x,  bottom_y, close_z,  0.0f, 0.0f,
+                left_x,  bottom_y, far_z,  0.0f, 1.0f,
 
-                left_x,  top_y,    far_z,    0.0f,  1.0f,  0.0f, // Top face
-                right_x, top_y,    far_z,    0.0f,  1.0f,  0.0f,
-                right_x, top_y,    close_z,  0.0f,  1.0f,  0.0f,
-                right_x, top_y,    close_z,  0.0f,  1.0f,  0.0f,
-                left_x,  top_y,    close_z,  0.0f,  1.0f,  0.0f,
-                left_x,  top_y,    far_z,    0.0f,  1.0f,  0.0f
+                left_x,  top_y, far_z,  0.0f, 1.0f,
+                right_x, top_y, far_z,  1.0f, 1.0f,
+                right_x, top_y, close_z,  1.0f, 0.0f,
+                right_x, top_y, close_z,  1.0f, 0.0f,
+                left_x,  top_y,close_z,  0.0f, 0.0f,
+                left_x,  top_y, far_z,  0.0f, 1.0f
             };
         }
 

@@ -49,7 +49,7 @@ namespace Project
                 cube.vao = GL.GenVertexArray();
                 GL.BindVertexArray(cube.vao);
 
-                GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 0);
+                GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 5 * sizeof(float), 0);
                 GL.EnableVertexAttribArray(0);
 
                 shader = new Shader("/Users/olakrason/projects/HouseProject/Project/Helpers/Shaders/shader.vert", "/Users/olakrason/projects/HouseProject/Project/Helpers/Shaders/shader.frag");
@@ -57,11 +57,11 @@ namespace Project
 
                 var positionLocation = shader.GetAttribLocation("aPosition");
                 GL.EnableVertexAttribArray(positionLocation);
-                GL.VertexAttribPointer(positionLocation, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 0);
+                GL.VertexAttribPointer(positionLocation, 3, VertexAttribPointerType.Float, false, 5 * sizeof(float), 0);
 
                 var texCoordLocation = shader.GetAttribLocation("aTexCoord");
                 GL.EnableVertexAttribArray(texCoordLocation);
-                GL.VertexAttribPointer(texCoordLocation, 1, VertexAttribPointerType.Float, false, 3 * sizeof(float), 3 * sizeof(float));
+                GL.VertexAttribPointer(texCoordLocation, 2, VertexAttribPointerType.Float, false, 5 * sizeof(float), 3 * sizeof(float));
 
                 cube.LoadTexture();
                 cube.texture.Use(TextureUnit.Texture0);
