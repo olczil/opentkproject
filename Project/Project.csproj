@@ -5,6 +5,16 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <UserSecretsId>b1a0a641-01c2-45dc-ac3a-4840d15f65ef</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="OpenTK" Version="4.7.7" />
+    <PackageReference Include="glfw" Version="3.3.8" />
+    <PackageReference Include="GlmSharp" Version="0.9.8" />
+    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+    <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="5.0.0" />
+    <PackageReference Include="StbImageSharp" Version="2.27.13" />
+  </ItemGroup>
 </Project>
