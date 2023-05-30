@@ -8,25 +8,77 @@ using Project.Helpers;
 using System.Drawing;
 using GlmSharp;
 using Models;
-using Shaders;
 
 namespace Project
 {
     public class Window : GameWindow
     {
 
-        public Window(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings)
-            : base(gameWindowSettings, nativeWindowSettings)
+        private readonly float[] vertices =
         {
-        }
+             // Position          Normal
+            -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, // Front face
+             0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+             0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+             0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+            -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+
+            -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f, // Back face
+             0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+             0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+             0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+            -0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+            -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+
+            -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f, // Left face
+            -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+            -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+            -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+            -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+            -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+
+             0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f, // Right face
+             0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+             0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+             0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+             0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+             0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+
+            -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f, // Bottom face
+             0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+             0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+             0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+            -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+
+            -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f, // Top face
+             0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+             0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+             0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+            -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+            -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
+        };
+
+        private readonly uint[] indices =
+        {
+            0, 1, 3,
+            1, 2, 3
+        };
+
+        private int vbo;
+        private int vaoCube;
+        private Shader shader;
+        private Texture texture;
+        private Vector2 lastPos;
 
         private Camera camera;
-        static bool firstMove = true;
-        static Vector2 lastPos;
+        private bool firstMove = true;
 
-        Texture texture;
-
-       
+        public Window(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings)
+        : base(gameWindowSettings, nativeWindowSettings)
+        {
+        }
 
         protected override void OnLoad()
         {
@@ -34,17 +86,35 @@ namespace Project
 
             GL.ClearColor(0.5f, 0.5f, 0.9f, 1.0f);
 
-
-            DemoShaders.InitShaders("/Users/olakrason/projects/HouseProject/Project/Helpers/Shaders/");
-
             GL.Enable(EnableCap.DepthTest);
 
+            vbo = GL.GenBuffer();
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
+            GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StaticDraw);
 
-            camera = new Camera(Vector3.UnitZ * 15, Size.X / (float)Size.Y);
+            vaoCube = GL.GenVertexArray();
+            GL.BindVertexArray(vaoCube);
 
-            CursorState = CursorState.Grabbed;
+            shader = new Shader("/Users/olakrason/projects/HouseProject/Project/Helpers/Shaders/shader.vert", "/Users/olakrason/projects/HouseProject/Project/Helpers/Shaders/shader.frag");
+            shader.Use();
+
+            var positionLocation = shader.GetAttribLocation("aPosition");
+            GL.EnableVertexAttribArray(positionLocation);
+            GL.VertexAttribPointer(positionLocation, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 0);
+
+            var texCoordLocation = shader.GetAttribLocation("aTexCoord");
+            GL.EnableVertexAttribArray(texCoordLocation);
+            GL.VertexAttribPointer(texCoordLocation, 2, VertexAttribPointerType.Float, false, 5 * sizeof(float), 3 * sizeof(float));
+
             texture = Texture.LoadFromFile("/Users/olakrason/projects/HouseProject/Project/bricks.png");
             texture.Use(TextureUnit.Texture0);
+
+            shader.SetInt("texture0", 0);
+
+            camera = new Camera(Vector3.UnitZ * 3, Size.X / (float)Size.Y);
+
+            CursorState = CursorState.Grabbed;
+
         }
 
 
@@ -54,27 +124,18 @@ namespace Project
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            mat4 P = mat4.Perspective(glm.Radians(50.0f), 1, 1, 50); //Wylicz macierz rzutowania
-            mat4 V = mat4.LookAt(new vec3(0, 0, -3), new vec3(0, 0, 0), new vec3(0, 1, 0)); //Wylicz macierz widoku
+            GL.BindVertexArray(vaoCube);
 
-            DemoShaders.spTextured.Use();
+            texture.Use(TextureUnit.Texture0);
 
-            GL.UniformMatrix4(DemoShaders.spTextured.U("P"), 1, false, P.Values1D); //Wyślij do zmiennej jednorodnej P programu cieniującego wartość zmiennej P zadeklarowanej powyżej
-            GL.UniformMatrix4(DemoShaders.spTextured.U("V"), 1, false, V.Values1D); //Wyślij do zmiennej jednorodnej V programu cieniującego wartość zmiennej V zadeklarowanej powyżej
+            shader.Use();
 
-            mat4 M = mat4.Rotate(0, new vec3(0, 1, 0)) * mat4.Rotate(0, new vec3(1, 0, 0)); //Macierz modelu to iloczyun macierzy obrotu wokół osi Y i X.
-            GL.UniformMatrix4(DemoShaders.spTextured.U("M"), 1, false, M.Values1D); //Wyślij do zmiennej jednorodnej M programu cieniującego wartość zmiennej M zadeklarowanej powyżej
+            shader.SetMatrix4("model", Matrix4.Identity);
+            shader.SetMatrix4("view", camera.GetViewMatrix());
+            shader.SetMatrix4("projection", camera.GetProjectionMatrix());
 
-            GL.EnableVertexAttribArray(DemoShaders.spTextured.A("vertex")); //Aktywuj przesyłanie danych do atrybutu vertex
-            GL.EnableVertexAttribArray(DemoShaders.spTextured.A("texCoord")); //Aktywuj przesyłanie danych do atrybutu texCoord            
 
-            GL.VertexAttribPointer(DemoShaders.spTextured.A("vertex"), 4, VertexAttribPointerType.Float, false, 0, MyTeapot.vertices); //Dane do atrybutu vertex pobieraj z tablicy MyCube.vertices
-            GL.VertexAttribPointer(DemoShaders.spTextured.A("texCoord"), 2, VertexAttribPointerType.Float, false, 0, MyTeapot.texCoords); //Dane do atrybutu vertex pobieraj z tablicy MyCube.texCoords
-
-            GL.DrawArrays(PrimitiveType.Triangles, 0, MyTeapot.vertexCount); //Rysuj model
-
-            GL.DisableVertexAttribArray(DemoShaders.spTextured.A("vertex")); //Wyłącz przesyłanie danych do atrybutu vertex 
-            GL.DisableVertexAttribArray(DemoShaders.spTextured.A("texCoord")); //Wyłącz przesyłanie danych do atrybutu texCoord
+            GL.DrawArrays(PrimitiveType.Triangles, 0, 36);
 
 
             SwapBuffers();
