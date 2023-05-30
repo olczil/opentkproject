@@ -14,64 +14,16 @@ namespace Project
     public class Window : GameWindow
     {
 
-        private readonly float[] vertices =
-        {
-             // Position          Normal
-            -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, // Front face
-             0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-             0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-             0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-            -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-
-            -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f, // Back face
-             0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-             0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-             0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-            -0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-            -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-
-            -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f, // Left face
-            -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-            -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-            -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-            -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-            -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-
-             0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f, // Right face
-             0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-             0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-             0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-             0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-             0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-
-            -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f, // Bottom face
-             0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-             0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-             0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-            -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-
-            -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f, // Top face
-             0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-             0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-             0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-            -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-            -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
-        };
-
-        private readonly uint[] indices =
-        {
-            0, 1, 3,
-            1, 2, 3
-        };
-
-        private int vbo;
-        private int vaoCube;
         private Shader shader;
-        private Texture texture;
         private Vector2 lastPos;
 
+        private Cube[] cubes = new Cube[] {
+            // (center_x, center_y, center_z, width(x), height(y), depth(z), testure_path, texture_unit)
+            new Cube( 0,     0,     0,      5,     2f,    5,     "/Users/olakrason/projects/HouseProject/Project/bricks.png"),
+            new Cube( 0,    -0.4f,  2.52f,  0.8f,  1.2f,  0.02f, "/Users/olakrason/projects/HouseProject/Project/white-plaster-texture.jpg"),
+            new Cube(-1.4f,  0f,    2.52f,  0.8f,  0.8f,  0.02f, "/Users/olakrason/projects/HouseProject/Project/white-plaster-texture.jpg"),
+            new Cube( 1.4f,  0f,    2.52f,  0.8f,  0.8f,  0.02f, "/Users/olakrason/projects/HouseProject/Project/white-plaster-texture.jpg")
+        };
         private Camera camera;
         private bool firstMove = true;
 
@@ -88,28 +40,35 @@ namespace Project
 
             GL.Enable(EnableCap.DepthTest);
 
-            vbo = GL.GenBuffer();
-            GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
-            GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StaticDraw);
+            foreach(Cube cube in cubes)
+            {
+                cube.vbo = GL.GenBuffer();
+                GL.BindBuffer(BufferTarget.ArrayBuffer, cube.vbo);
+                GL.BufferData(BufferTarget.ArrayBuffer, cube.vertices.Length * sizeof(float), cube.vertices, BufferUsageHint.StaticDraw);
 
-            vaoCube = GL.GenVertexArray();
-            GL.BindVertexArray(vaoCube);
+                cube.vao = GL.GenVertexArray();
+                GL.BindVertexArray(cube.vao);
 
-            shader = new Shader("/Users/olakrason/projects/HouseProject/Project/Helpers/Shaders/shader.vert", "/Users/olakrason/projects/HouseProject/Project/Helpers/Shaders/shader.frag");
-            shader.Use();
+                GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 0);
+                GL.EnableVertexAttribArray(0);
 
-            var positionLocation = shader.GetAttribLocation("aPosition");
-            GL.EnableVertexAttribArray(positionLocation);
-            GL.VertexAttribPointer(positionLocation, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 0);
+                shader = new Shader("/Users/olakrason/projects/HouseProject/Project/Helpers/Shaders/shader.vert", "/Users/olakrason/projects/HouseProject/Project/Helpers/Shaders/shader.frag");
+                shader.Use();
 
-            var texCoordLocation = shader.GetAttribLocation("aTexCoord");
-            GL.EnableVertexAttribArray(texCoordLocation);
-            GL.VertexAttribPointer(texCoordLocation, 2, VertexAttribPointerType.Float, false, 5 * sizeof(float), 3 * sizeof(float));
+                var positionLocation = shader.GetAttribLocation("aPosition");
+                GL.EnableVertexAttribArray(positionLocation);
+                GL.VertexAttribPointer(positionLocation, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 0);
 
-            texture = Texture.LoadFromFile("/Users/olakrason/projects/HouseProject/Project/bricks.png");
-            texture.Use(TextureUnit.Texture0);
+                var texCoordLocation = shader.GetAttribLocation("aTexCoord");
+                GL.EnableVertexAttribArray(texCoordLocation);
+                GL.VertexAttribPointer(texCoordLocation, 1, VertexAttribPointerType.Float, false, 3 * sizeof(float), 3 * sizeof(float));
 
-            shader.SetInt("texture0", 0);
+                cube.LoadTexture();
+                cube.texture.Use(TextureUnit.Texture0);
+
+                shader.SetInt("texture0", 0);
+            }
+            
 
             camera = new Camera(Vector3.UnitZ * 3, Size.X / (float)Size.Y);
 
@@ -124,19 +83,20 @@ namespace Project
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            GL.BindVertexArray(vaoCube);
+            foreach(Cube cube in cubes)
+            {
+                GL.BindVertexArray(cube.vao);
 
-            texture.Use(TextureUnit.Texture0);
+                cube.texture.Use(TextureUnit.Texture0);
 
-            shader.Use();
+                shader.Use();
 
-            shader.SetMatrix4("model", Matrix4.Identity);
-            shader.SetMatrix4("view", camera.GetViewMatrix());
-            shader.SetMatrix4("projection", camera.GetProjectionMatrix());
+                shader.SetMatrix4("model", Matrix4.Identity);
+                shader.SetMatrix4("view", camera.GetViewMatrix());
+                shader.SetMatrix4("projection", camera.GetProjectionMatrix());
 
-
-            GL.DrawArrays(PrimitiveType.Triangles, 0, 36);
-
+                GL.DrawArrays(PrimitiveType.Triangles, 0, 36);
+            }
 
             SwapBuffers();
         }
