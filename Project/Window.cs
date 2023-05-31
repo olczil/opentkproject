@@ -20,16 +20,47 @@ namespace Project
         private Cube[] cubes = new Cube[] {
             // (center_x, center_y, center_z, width(x), height(y), depth(z), testure_path, texture_unit)
             // sides (walls)
-            new Cube( 0,     0,     0,      5,     2f,    5,     "/Users/olakrason/projects/HouseProject/Project/bricks.png"),
+            new Cube( 0,     0,     0,      5,     2f,    5,     "/Users/olakrason/projects/HouseProject/Project/wall-tex.jpg"),
             // door
-            new Cube( 0,    -0.4f,  2.52f,  0.8f,  1.2f,  0.02f, "/Users/olakrason/projects/HouseProject/Project/white-plaster-texture.jpg"),
+            new Cube( 0,    -0.4f,  2.52f,  0.8f,  1.2f,  0.02f, "/Users/olakrason/projects/HouseProject/Project/window.jpg"),
             // front left side window
-            new Cube(-1.4f,  0f,    2.52f,  0.8f,  0.8f,  0.02f, "/Users/olakrason/projects/HouseProject/Project/white-plaster-texture.jpg"),
+            new Cube(-1.4f,  0f,    2.52f,  0.8f,  0.8f,  0.02f, "/Users/olakrason/projects/HouseProject/Project/window.jpg"),
             // front right side window
-            new Cube( 1.4f,  0f,    2.52f,  0.8f,  0.8f,  0.02f, "/Users/olakrason/projects/HouseProject/Project/white-plaster-texture.jpg")
+            new Cube( 1.4f,  0f,    2.52f,  0.8f,  0.8f,  0.02f, "/Users/olakrason/projects/HouseProject/Project/window.jpg"),
+
+            // 2nd floor
+            new Cube( 0,     2,     0,      5,     2f,    5,     "/Users/olakrason/projects/HouseProject/Project/wall-tex.jpg"),
+            // front left side window
+            new Cube(-1.4f,  2,    2.52f,  0.8f,  0.8f,  0.02f, "/Users/olakrason/projects/HouseProject/Project/window.jpg"),
+            // front right side window
+            new Cube( 1.4f,  2,    2.52f,  0.8f,  0.8f,  0.02f, "/Users/olakrason/projects/HouseProject/Project/window.jpg"),
+
         };
+
         private Camera camera;
         private bool firstMove = true;
+
+        ////
+
+        private List<string> ImageFaces
+        {
+            get;
+            set;
+        }
+
+        public void GetImageFaces()
+        {
+            ImageFaces = new List<string>();
+            string dir = "/Users/olakrason/projects/HouseProject/Project/CubemapPhotos/";
+            ImageFaces.Add(Path.Combine(dir, "posz.jpg"));
+            ImageFaces.Add(Path.Combine(dir, "negz.jpg"));
+            ImageFaces.Add(Path.Combine(dir, "posy.jpg"));
+            ImageFaces.Add(Path.Combine(dir, "negy.jpg"));
+            ImageFaces.Add(Path.Combine(dir, "posx.jpg"));
+            ImageFaces.Add(Path.Combine(dir, "negx.jpg"));
+        }
+
+        ////
 
         public Window(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings)
         : base(gameWindowSettings, nativeWindowSettings)
@@ -41,6 +72,7 @@ namespace Project
             base.OnLoad();
 
             GL.ClearColor(0.5f, 0.5f, 0.9f, 1.0f);
+
 
             GL.Enable(EnableCap.DepthTest);
 
@@ -72,7 +104,8 @@ namespace Project
 
                 shader.SetInt("texture0", 0);
             }
-            
+
+
 
             camera = new Camera(Vector3.UnitZ * 3, Size.X / (float)Size.Y);
 
@@ -90,6 +123,7 @@ namespace Project
             foreach(Cube cube in cubes)
             {
                 GL.BindVertexArray(cube.vao);
+
 
                 cube.texture.Use(TextureUnit.Texture0);
 
