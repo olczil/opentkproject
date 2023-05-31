@@ -28,32 +28,32 @@ namespace Project
         private Cube[] cubes = new Cube[] {
             // (center_x, center_y, center_z, width(x), height(y), depth(z), testure_path, texture_unit)
             // grass
-            new Cube(0, -1f, 0, 50, 0.2f, 50, "/Users/olakrason/projects/HouseProject/Project/grass-2.png"),
+            new Cube(0, -1f, 0, 50, 0.2f, 50, "../../../grass-2.png"),
             //pavement
-            new Cube(0, -0.9f, 5f, 0.8f, 0.05f, 10.0f, "/Users/olakrason/projects/HouseProject/Project/pavement.png"),
+            new Cube(0, -0.9f, 5f, 0.8f, 0.05f, 10.0f, "../../../pavement.png"),
 
 
             // sides (walls)
-            new Cube(0, 0, 0, 5, 2f, 4f, "/Users/olakrason/projects/HouseProject/Project/wall-tex.jpg"),
+            new Cube(0, 0, 0, 5, 2f, 4f, "../../../wall-tex.jpg"),
             // door
-            new Cube(0, -0.4f, 2.02f, 0.8f, 1.2f, 0.02f, "/Users/olakrason/projects/HouseProject/Project/door-2.jpg"),
+            new Cube(0, -0.4f, 2.02f, 0.8f, 1.2f, 0.02f, "../../../door-2.jpg"),
             // front left side window
-            new Cube(-1.4f, 0f, 2f, 0.8f, 0.8f, 0.02f, "/Users/olakrason/projects/HouseProject/Project/window-2.png"),
+            new Cube(-1.4f, 0f, 2f, 0.8f, 0.8f, 0.02f, "../../../window-2.png"),
             // front right side window
-            new Cube(1.4f, 0f, 2f, 0.8f, 0.8f, 0.02f, "/Users/olakrason/projects/HouseProject/Project/window-2.png"),
+            new Cube(1.4f, 0f, 2f, 0.8f, 0.8f, 0.02f, "../../../window-2.png"),
 
             // 2nd floor
-            new Cube(0, 2f, 0, 5, 2f, 4f, "/Users/olakrason/projects/HouseProject/Project/wall-tex.jpg"),
+            new Cube(0, 2f, 0, 5, 2f, 4f, "../../../wall-tex.jpg"),
             // front left side window
-            new Cube(-1.4f, 2, 2f, 0.8f, 0.8f, 0.02f, "/Users/olakrason/projects/HouseProject/Project/window-2.png"),
+            new Cube(-1.4f, 2, 2f, 0.8f, 0.8f, 0.02f, "../../../window-2.png"),
             // front right side window
-            new Cube(1.4f, 2, 2f, 0.8f, 0.8f, 0.02f, "/Users/olakrason/projects/HouseProject/Project/window-2.png"),
+            new Cube(1.4f, 2, 2f, 0.8f, 0.8f, 0.02f, "../../../window-2.png"),
 
             //chimney
-            new Cube(-1.5f, 3.5f, 0.1f, 0.5f, 2f, 0.5f, "/Users/olakrason/projects/HouseProject/Project/chimney.jpg"),
+            new Cube(-1.5f, 3.5f, 0.1f, 0.5f, 2f, 0.5f, "../../../chimney.jpg"),
         };
 
-        private Pyramid roof = new Pyramid(new Punkt { x = 0, y = 2.9f, z = 0 }, 5.5f, 2f, 4.5f, "/Users/olakrason/projects/HouseProject/Project/roof.jpg");
+        private Pyramid roof = new Pyramid(new Punkt { x = 0, y = 2.9f, z = 0 }, 5.5f, 2f, 4.5f, "../../../roof.jpg");
 
         public Window(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings)
         : base(gameWindowSettings, nativeWindowSettings)
@@ -81,7 +81,7 @@ namespace Project
                 GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 5 * sizeof(float), 0);
                 GL.EnableVertexAttribArray(0);
 
-                shader = new Shader("/Users/olakrason/projects/HouseProject/Project/Helpers/Shaders/shader.vert", "/Users/olakrason/projects/HouseProject/Project/Helpers/Shaders/shader.frag");
+                shader = new Shader("../../../Helpers/Shaders/shader.vert", "../../../Helpers/Shaders/shader.frag");
                 shader.Use();
 
                 var positionLocation = shader.GetAttribLocation("aPosition");
@@ -112,7 +112,7 @@ namespace Project
 
                 GL.EnableVertexAttribArray(0);
 
-                shader = new Shader("/Users/olakrason/projects/HouseProject/Project/Helpers/Shaders/shader.vert", "/Users/olakrason/projects/HouseProject/Project/Helpers/Shaders/shader.frag");
+                shader = new Shader("../../../Helpers/Shaders/shader.vert", "../../../Helpers/Shaders/shader.frag");
                 shader.Use();
 
                 // Because there's now 5 floats between the start of the first vertex and the start of the second,
