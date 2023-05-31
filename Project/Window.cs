@@ -56,7 +56,7 @@ namespace Project
         {
             base.OnLoad();
 
-            GL.ClearColor(0.5f, 0.5f, 0.9f, 1.0f);
+            GL.ClearColor(0.93f, 0.97f, 0.97f, 1.0f);
 
 
             GL.Enable(EnableCap.DepthTest);
