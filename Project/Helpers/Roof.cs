@@ -19,47 +19,31 @@ namespace Project.Helpers
             float far_z = center_z - (depth / 2);
 
             vertices = new float[] {
-                left_x, bottom_y,  far_z,  0.0f, 0.0f,
-                right_x, bottom_y, far_z,  1.0f, 0.0f,
-                right_x,  top_y,   far_z,  1.0f, 1.0f,
-                right_x,  top_y,   far_z,  1.0f, 1.0f,
-                left_x,  top_y,    far_z,  0.0f, 1.0f,
-                left_x, bottom_y,  far_z,  0.0f, 0.0f,
 
-                left_x, bottom_y,   close_z,  0.0f, 0.0f,
-                right_x, bottom_y,  close_z,  1.0f, 0.0f,
-                right_x, top_y,     close_z,  1.0f, 1.0f,
-                right_x, top_y,     close_z,  1.0f, 1.0f,
-                left_x,  top_y,     close_z,  0.0f, 1.0f,
-                left_x, bottom_y,   close_z,  0.0f, 0.0f,
+                left_x, bottom_y, far_z, //Bottom-left vertex
+                right_x, bottom_y, far_z, //Bottom-right vertex
+                0.0f,  top_y, 0.0f,  //Top vertex
 
-                left_x,  top_y,     close_z,  1.0f, 0.0f,
-                left_x,  top_y,    far_z,  1.0f, 1.0f,
-                left_x, bottom_y,  far_z,  0.0f, 1.0f,
-                left_x, bottom_y,  far_z,  0.0f, 1.0f,
-                left_x, bottom_y,   close_z,  0.0f, 0.0f,
-                left_x,  top_y,     close_z,  1.0f, 0.0f,
+                left_x, bottom_y, close_z, 
+                right_x, bottom_y, close_z, 
+                0.0f,  top_y, 0.0f, 
 
-                 right_x, top_y,     close_z,  1.0f, 0.0f,
-                 right_x, top_y,     far_z,  1.0f, 1.0f,
-                 right_x, bottom_y,  far_z,  0.0f, 1.0f,
-                 right_x, bottom_y,  far_z,  0.0f, 1.0f,
-                 right_x, bottom_y,  close_z,  0.0f, 0.0f,
-                 right_x, top_y,     close_z,  1.0f, 0.0f,
+                left_x, bottom_y, far_z,
+                left_x, bottom_y, close_z,
+                0.0f, top_y, 0.0f,
 
-                left_x,  bottom_y, far_z,  0.0f, 1.0f,
-                right_x, bottom_y, far_z,  1.0f, 1.0f,
-                right_x, bottom_y, close_z,  1.0f, 0.0f,
-                right_x, bottom_y, close_z,  1.0f, 0.0f,
-                left_x,  bottom_y, close_z,  0.0f, 0.0f,
-                left_x,  bottom_y, far_z,  0.0f, 1.0f,
+                right_x, bottom_y, far_z,
+                right_x, bottom_y, close_z,
+                0.0f, top_y, 0.0f,
 
-                left_x,  top_y, far_z,  0.0f, 1.0f,
-                right_x, top_y, far_z,  1.0f, 1.0f,
-                right_x, top_y, close_z,  1.0f, 0.0f,
-                right_x, top_y, close_z,  1.0f, 0.0f,
-                left_x,  top_y,close_z,  0.0f, 0.0f,
-                left_x,  top_y, far_z,  0.0f, 1.0f
+                right_x, bottom_y, far_z,
+                right_x, bottom_y, close_z,
+                0.0f, top_y, 0.0f,
+
+                left_x, bottom_y, close_z,
+                left_x, bottom_y, far_z,
+                0.0f, top_y, 0.0f,
+
             };
         }
 
@@ -73,26 +57,19 @@ namespace Project.Helpers
 
         public readonly uint[] indices =
         {
-                //left
-                0, 2, 1,
-                0, 3, 2,
-                //back
-                1, 2, 6,
-                6, 5, 1,
-                //right
-                4, 5, 6,
-                6, 7, 4,
-                //top
-                2, 3, 6,
-                6, 3, 7,
-                //front
-                0, 7, 3,
-                0, 4, 7,
-                //bottom
-                0, 1, 5,
-                0, 5, 4
+            0, 1, 2,
+            0, 2, 3,
+            0, 1, 4,
+            1, 2, 4,
+            2, 3, 4,
+            3, 0, 4
         };
 
+        float[] texCoords = {
+    0.0f, 0.0f,  // lower-left corner  
+    1.0f, 0.0f,  // lower-right corner
+    0.5f, 1.0f   // top-center corner
+};
 
     }
 }
