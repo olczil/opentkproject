@@ -18,11 +18,9 @@
     <PackageReference Include="StbImageSharp" Version="2.27.13" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="CubemapPhotos\" />
-    <None Remove="Helpers\CubemapShaders\" />
+    <None Remove="Assets\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CubemapPhotos\" />
-    <Folder Include="Helpers\CubemapShaders\" />
+    <Folder Include="Assets\" />
   </ItemGroup>
 </Project>

@@ -10,16 +10,16 @@ namespace Project.Helpers
         public float z;
     }
 
-	public class Triangle
-	{
+    public class Triangle
+    {
         public int vbo { get; set; }
         public int vao { get; set; }
-        private string texturePath;
 
+        private string texturePath;
         public Texture texture { get; set; }
 
         public Triangle(Punkt vertex_1, Punkt vertex_2, Punkt vertex_3, string texturePath)
-		{
+        {
             this.texturePath = texturePath;
 
             vertices = new float[]
@@ -39,4 +39,3 @@ namespace Project.Helpers
 
     }
 }
-

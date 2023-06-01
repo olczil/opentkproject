@@ -7,7 +7,6 @@ using OpenTK.Windowing.Desktop;
 using Project.Helpers;
 using System.Drawing;
 using GlmSharp;
-using Models;
 
 namespace Project
 {
@@ -28,32 +27,32 @@ namespace Project
         private Cube[] cubes = new Cube[] {
             // (center_x, center_y, center_z, width(x), height(y), depth(z), testure_path, texture_unit)
             // grass
-            new Cube(0, -1f, 0, 50, 0.2f, 50, "../../../grass-2.png"),
+            new Cube(0, -1f, 0, 50, 0.2f, 50, "../../../Assets/grass.png"),
             //pavement
-            new Cube(0, -0.9f, 5f, 0.8f, 0.05f, 10.0f, "../../../pavement.png"),
+            new Cube(0, -0.9f, 5f, 0.8f, 0.05f, 10.0f, "../../../Assets/chimney.jpg"),
 
 
             // sides (walls)
-            new Cube(0, 0, 0, 5, 2f, 4f, "../../../wall-tex.jpg"),
+            new Cube(0, 0, 0, 5, 2f, 4f, "../../../Assets/wall.jpg"),
             // door
-            new Cube(0, -0.4f, 2.02f, 0.8f, 1.2f, 0.02f, "../../../door-2.jpg"),
+            new Cube(0, -0.4f, 2.02f, 0.8f, 1.2f, 0.02f, "../../../Assets/door.jpg"),
             // front left side window
-            new Cube(-1.4f, 0f, 2f, 0.8f, 0.8f, 0.02f, "../../../window-2.png"),
+            new Cube(-1.4f, 0f, 2f, 0.8f, 0.8f, 0.02f, "../../../Assets/window.png"),
             // front right side window
-            new Cube(1.4f, 0f, 2f, 0.8f, 0.8f, 0.02f, "../../../window-2.png"),
+            new Cube(1.4f, 0f, 2f, 0.8f, 0.8f, 0.02f, "../../../Assets/window.png"),
 
             // 2nd floor
-            new Cube(0, 2f, 0, 5, 2f, 4f, "../../../wall-tex.jpg"),
+            new Cube(0, 2f, 0, 5, 2f, 4f, "../../../Assets/wall.jpg"),
             // front left side window
-            new Cube(-1.4f, 2, 2f, 0.8f, 0.8f, 0.02f, "../../../window-2.png"),
+            new Cube(-1.4f, 2, 2f, 0.8f, 0.8f, 0.02f, "../../../Assets/window.png"),
             // front right side window
-            new Cube(1.4f, 2, 2f, 0.8f, 0.8f, 0.02f, "../../../window-2.png"),
+            new Cube(1.4f, 2, 2f, 0.8f, 0.8f, 0.02f, "../../../Assets/window.png"),
 
             //chimney
-            new Cube(-1.5f, 3.5f, 0.1f, 0.5f, 2f, 0.5f, "../../../chimney.jpg"),
+            new Cube(-1.5f, 3.5f, 0.1f, 0.5f, 2f, 0.5f, "../../../Assets/chimney.jpg"),
         };
 
-        private Pyramid roof = new Pyramid(new Punkt { x = 0, y = 2.9f, z = 0 }, 5.5f, 2f, 4.5f, "../../../roof.jpg");
+        private Pyramid roof = new Pyramid(new Punkt { x = 0, y = 2.9f, z = 0 }, 5.5f, 2f, 4.5f, "../../../Assets/roof.jpg");
 
         public Window(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings)
         : base(gameWindowSettings, nativeWindowSettings)
@@ -115,16 +114,10 @@ namespace Project
                 shader = new Shader("../../../Helpers/Shaders/shader.vert", "../../../Helpers/Shaders/shader.frag");
                 shader.Use();
 
-                // Because there's now 5 floats between the start of the first vertex and the start of the second,
-                // we modify the stride from 3 * sizeof(float) to 5 * sizeof(float).
-                // This will now pass the new vertex array to the buffer.
                 var vertexLocation = shader.GetAttribLocation("aPosition");
                 GL.EnableVertexAttribArray(vertexLocation);
                 GL.VertexAttribPointer(vertexLocation, 3, VertexAttribPointerType.Float, false, 5 * sizeof(float), 0);
 
-                // Next, we also setup texture coordinates. It works in much the same way.
-                // We add an offset of 3, since the texture coordinates comes after the position data.
-                // We also change the amount of data to 2 because there's only 2 floats for texture coordinates.
                 var texCoordLocation = shader.GetAttribLocation("aTexCoord");
                 GL.EnableVertexAttribArray(texCoordLocation);
                 GL.VertexAttribPointer(texCoordLocation, 2, VertexAttribPointerType.Float, false, 5 * sizeof(float), 3 * sizeof(float));
@@ -178,7 +171,7 @@ namespace Project
 
                 GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
             }
-            
+
 
             SwapBuffers();
         }
@@ -189,7 +182,7 @@ namespace Project
 
             base.OnUpdateFrame(e);
 
-            if (!IsFocused) // Check to see if the window is focused
+            if (!IsFocused)
             {
                 return;
             }
@@ -226,4 +219,3 @@ namespace Project
         }
     }
 }
-

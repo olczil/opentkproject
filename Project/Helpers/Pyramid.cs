@@ -1,17 +1,18 @@
 ﻿using System;
 namespace Project.Helpers
 {
-	public class Pyramid
-	{
-		public Triangle[] triangles { get; set; }
+    public class Pyramid
+    {
+        public Triangle[] triangles { get; set; }
 
-		public Pyramid(Punkt baseCenter, float width, float height, float depth, string texturePath)
-		{
-			Punkt closeLeft = new Punkt {
-				x = baseCenter.x - (width / 2),
-				y = baseCenter.y,
-				z = baseCenter.z + (depth / 2)
-			};
+        public Pyramid(Punkt baseCenter, float width, float height, float depth, string texturePath)
+        {
+            Punkt closeLeft = new Punkt
+            {
+                x = baseCenter.x - (width / 2),
+                y = baseCenter.y,
+                z = baseCenter.z + (depth / 2)
+            };
             Punkt farLeft = new Punkt
             {
                 x = baseCenter.x - (width / 2),
@@ -45,6 +46,5 @@ namespace Project.Helpers
                 new Triangle(closeRight, closeLeft, pinacle, texturePath)
             };
         }
-	}
+    }
 }
-
